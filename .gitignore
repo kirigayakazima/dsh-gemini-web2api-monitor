@@ -1,0 +1,20 @@
+# 依赖与大体积临时目录（约 185MB，绝不入库）
+node_modules/
+.npm-cache/
+.tmp/
+
+# 本机修复前的备份文件
+*.bak-before-*
+*.bak-*
+
+# 构建辅助
+*.tsbuildinfo
+*.tgz
+
+# 本机真实密钥 / cookie，绝不入库
+.real_key
+gemini-auth.json
+cookie.txt
+
+# 说明：lib/ 是实际运行产物（宿主 index.js + 浏览器端 client.js），
+# 刻意纳入版本控制 —— 否则 clone 下来的是「没有构建、无法运行」的插件。
