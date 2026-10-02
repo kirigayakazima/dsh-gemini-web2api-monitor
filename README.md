@@ -119,6 +119,35 @@ return schema !== undefined && 'toJSON' in schema ? schema : undefined;
 **正确做法**：不导出 `Config`（见 `lib/index.js` 的 `export { name, inject, apply }`）。
 运行时也不需要该 schema —— `apply()` 内部用 `cfg` 兜底默认值。
 
+## ⚠️ 第二个必须知道的坑：`src/` 与 `lib/` 是两套不同实现
+
+**`lib/` 才是实际运行、且被持续维护的版本；`src/` 已经落后，不要拿它重新构建。**
+
+| | 探针实现 |
+|---|---|
+| `src/index.ts` | 自己用 `node:https` 经代理发请求，**不调用 Python**；且仍导出 `Config = z.object({...})` |
+| `lib/index.js`（运行中的） | **委派给 `probe.py`**（Node 的 TLS 栈过不了 Clash 一类代理），已移除 `Config` 导出，并带探针路径回退 |
+
+也就是说 `lib/` 是**手工调整过的产物**，从未由这份 TypeScript 源码编译回来。直接
+`bash scripts/build.sh` 会把正在工作的实现**覆盖掉**（丢掉 Python 委派与路径回退）。
+
+若要恢复"可构建"，需要先把 `src/index.ts` 对齐到 `lib/index.js` 的行为，再验证一次，
+才能重新启用构建流程。在那之前：**改行为请直接改 `lib/index.js`**。
+
+## probe.py 的定位（防御性回退）
+
+探针路径**每次调用都重新解析**，而不是加载时固化 —— 否则插件目录一旦移动，
+DSH 进程里缓存的 ESM `import.meta.url` 会一直指向旧路径，导致每次探测都失败、
+必须重启 DSH 才恢复。查找顺序：
+
+1. `$DSH_MONITOR_PROBE`（环境变量，可显式覆盖）
+2. 插件自带的 `../probe.py`（常规情况）
+3. `$DSH_HOME/super-injector/probe.py`
+4. `D:/CodePackage/DSPlug/gemini-web2api-monitor/probe.py`（本机插件仓库）
+5. `D:/CodePackage/DSP/gemini-web2api-monitor/probe.py`（本机旧位置）
+
+失败信息里会带上实际尝试的路径，便于定位。
+
 ## 构建
 
 ```bash
