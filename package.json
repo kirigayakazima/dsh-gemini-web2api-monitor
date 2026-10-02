@@ -1,6 +1,6 @@
 {
   "name": "dsh-gemini-web2api-monitor",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "监控 gemini-web2api 反代服务的模型降级状态（读上游 slot39 权威字段，定时检测 + 状态展示）",
   "type": "module",
   "main": "./lib/index.js",
