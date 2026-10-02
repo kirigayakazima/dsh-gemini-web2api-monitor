@@ -1,7 +1,7 @@
 import { fileURLToPath } from 'node:url'
 import type { UserConfig } from 'tsdown'
 
-const PLUGIN_ID = "@dsh-external/gemini-web2api-monitor"
+const PLUGIN_ID = "dsh-gemini-web2api-monitor"
 
 const CLIENT_EXTERNALS = [
   'react', 'react/jsx-runtime', 'react-dom', 'react-dom/client',

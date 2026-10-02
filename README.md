@@ -1,4 +1,4 @@
-# @dsh-external/gemini-web2api-monitor
+# dsh-gemini-web2api-monitor
 
 监控 [gemini-web2api](https://github.com/Sophomoresty/gemini-web2api) 反代服务的**模型降级**状态：
 读上游权威字段 `slot39`（而非可能造假的模型标签），定时检测，并在 DSH 侧边栏给出状态面板与告警。
@@ -27,14 +27,14 @@ Gemini 网页版的会话靠 `__Secure-1PSIDTS` 这类**轮换 cookie**维持。
 ```json
 {
   "dependencies": {
-    "@dsh-external/gemini-web2api-monitor": "file:D:/CodePackage/DSPlug/gemini-web2api-monitor"
+    "dsh-gemini-web2api-monitor": "file:D:/CodePackage/DSPlug/gemini-web2api-monitor"
   },
   "dsh": {
     "profile": {
       "bundles": [
         "@deepseek-ai/dsh-base",
         "@deepseek-ai/dsh-web-app",
-        "@dsh-external/gemini-web2api-monitor"
+        "dsh-gemini-web2api-monitor"
       ]
     }
   }
@@ -46,7 +46,7 @@ Gemini 网页版的会话靠 `__Secure-1PSIDTS` 这类**轮换 cookie**维持。
 ```yaml
 - insert:
     - id: gemini-web2api-monitor
-      name: "@dsh-external/gemini-web2api-monitor"
+      name: "dsh-gemini-web2api-monitor"
 ```
 
 也可以把目录 junction 到 profile 的 `node_modules/@dsh-external/` 下（Windows）：

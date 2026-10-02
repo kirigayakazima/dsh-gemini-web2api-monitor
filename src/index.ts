@@ -1,5 +1,5 @@
 /**
- * @dsh-external/gemini-web2api-monitor — Gemini 反代降级监控（hybrid 形态）。
+ * dsh-gemini-web2api-monitor — Gemini 反代降级监控（hybrid 形态）。
  *
  * 核心：确定性检测。定时向 gemini.google.com 上游发一个 StreamGenerate 诊断请求，
  * 解析响应里的权威字段：
@@ -20,7 +20,7 @@ type AppContext = Context & {
   setInterval(fn: () => void, ms: number): any
 }
 
-export const name = "@dsh-external/gemini-web2api-monitor"
+export const name = "dsh-gemini-web2api-monitor"
 export const inject = ['timer', 'webServer']
 
 export interface Config {
@@ -250,5 +250,5 @@ export function apply(ctx: AppContext, config: Config): void {
   // 启动时立刻探一次（不等第一个 timer）
   void runProbe('boot')
 
-  ctx.logger?.info?.('[' + "@dsh-external/gemini-web2api-monitor" + '] 监控已启动：每 ' + config.intervalMs + 'ms 检测一次，目标模型 ' + config.label + ' (' + config.modelId + ')')
+  ctx.logger?.info?.('[' + "dsh-gemini-web2api-monitor" + '] 监控已启动：每 ' + config.intervalMs + 'ms 检测一次，目标模型 ' + config.label + ' (' + config.modelId + ')')
 }

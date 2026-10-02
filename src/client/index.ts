@@ -1,5 +1,5 @@
 /**
- * @dsh-external/gemini-web2api-monitor — client 面板。
+ * dsh-gemini-web2api-monitor — client 面板。
  *
  * 三个 UI 入口（对齐 usage-vendor-stats 的模式）：
  *   1. sidebar.footer.action  侧边栏底部入口（在"用量统计"旁边，order 11）
@@ -216,7 +216,7 @@ export function apply(ctx: ClientContext): void {
       { name: 'sidebar.footer.action', id: 'gemini-web2api-monitor-entry', order: 11, label: () => 'Gemini 监控' },
       () => React.createElement(SidebarEntry),
     ),
-  ), '@dsh-external/gemini-web2api-monitor: sidebar')
+  ), 'dsh-gemini-web2api-monitor: sidebar')
 
   // 2. 会话内快捷状态卡
   ctx.effect(() => ctx.slots.inject('conversation.view', () =>
@@ -246,7 +246,7 @@ export function apply(ctx: ClientContext): void {
         },
       }),
     }),
-  ), '@dsh-external/gemini-web2api-monitor: conv')
+  ), 'dsh-gemini-web2api-monitor: conv')
 }
 
 export default { inject, apply }
